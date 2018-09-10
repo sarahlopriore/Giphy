@@ -14,13 +14,29 @@ $(document).ready(function() {
     };
 
     // for each button click, run an ajax request to the giphy api to get 10 search results for that topic
-    $(document).on("click", ".topics-btn", function() {
-        var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + $(this).attr("id") + "&api_key=mMR97LCZTFVnxouA2wyRM7RKUTWNdMv7&limit=10&rating=g";
-        console.log(queryURL);
-    })
-    // each gif should also display the rating underneath
     // results are displayed as static gifs
-    // have the gif results overwrite the previous results
+    $(document).on("click", ".topics-btn", function() {
+        var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + $(this).attr("id") + "&api_key=mMR97LCZTFVnxouA2wyRM7RKUTWNdMv7&limit=10&rating=pg-13";
+        
+        $.ajax({
+            url: queryURL,
+            method: "GET"
+        }).then(function(response) {
+            var $display = $("#gifDisplay");
+            var dataArray = response.data;
+            // have the gif results overwrite the previous results
+            $display.empty();
+            for (j = 0; j < dataArray.length; j++) {
+                var dataNum = dataArray[j];
+                var staticURL = dataNum.images.fixed_height_still.url;
+                var staticGif = $("<img />").attr("src", staticURL);
+                staticGif.addClass("spacing");
+                $display.append(staticGif);
+                // each gif should also display the rating underneath
+            }
+        })
+    })
+
 
     // when a static gif is clicked, it moves
     // when moving gif is clicked, it stops moving
