@@ -27,12 +27,19 @@ $(document).ready(function() {
             // have the gif results overwrite the previous results
             $display.empty();
             for (j = 0; j < dataArray.length; j++) {
+                // dataNum is technically also counting number of gifs being created, so also using as gif counter
                 var dataNum = dataArray[j];
+                var $newGifDiv = $("<div class='col-md-4'></div>");
                 var staticURL = dataNum.images.fixed_height_still.url;
-                var staticGif = $("<img />").attr("src", staticURL);
-                staticGif.addClass("spacing");
-                $display.append(staticGif);
+                var $staticGif = $("<img />").attr("src", staticURL);
+                $staticGif.addClass("spacing");
+                $newGifDiv.append($staticGif);
                 // each gif should also display the rating underneath
+                var gifRating = dataNum.rating;
+                var $ratingDisplay = $("<p></p>").append(gifRating);
+                console.log($ratingDisplay);
+                $newGifDiv.append($ratingDisplay); 
+                $display.append($newGifDiv);
             }
         })
     })
