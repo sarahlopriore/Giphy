@@ -4,14 +4,31 @@ $(document).ready(function() {
     var topics = ["avocado", "apple", "sweet potato", "bell pepper", "pineapple", "mango", "onion", "broccoli", "watermelon", "corn", "kiwi", "blueberry", "celery"];
 
  
-
+    
     // on page load create buttons for all items in the topics array
     // loop through the topics array to create each button
-    for (i = 0; i < topics.length; i++) {
-        var $newButton = $("<button class='btn btn-success btn-space topics-btn'></button>").append(topics[i]);
-        $newButton.attr("id", topics[i]);
-        $("#buttons").append($newButton);
+    var createButtons = function() {
+        for (i = 0; i < topics.length; i++) {
+            var $newButton = $("<button class='btn btn-success btn-space topics-btn'></button>").append(topics[i]);
+            $newButton.attr("id", topics[i]);
+            $("#buttons").append($newButton);
+        };
     };
+
+    createButtons();
+
+    // when user adds an topic through the newButtonInput, it is added to the topics array
+    // this then creates a new button for that new topic
+    // this new button will function the same as the others
+    $(document).on("click", "#submitBtn", function() {
+        event.preventDefault();
+        var newTopic = $("#newButtonInput").val();
+        console.log(newTopic);
+        topics.push(newTopic);
+        $("#buttons").empty();
+        createButtons();
+    });
+
 
     // for each button click, run an ajax request to the giphy api to get 10 search results for that topic
     // results are displayed as static gifs
@@ -46,7 +63,7 @@ $(document).ready(function() {
                 $newGifDiv.append($ratingDisplay); 
                 console.log(gifCounter);
                 console.log(dataNum.images);
-                console.log(dataNum.images.fixed_height.url);
+                //console.log(dataNum.images.fixed_height.url);
                 $display.append($newGifDiv); 
             };
 
@@ -74,12 +91,6 @@ $(document).ready(function() {
 
         });
     });
-
-
-
-    // when user adds an topic through the newButtonInput, it is added to the topics array
-    // this then creates a new button for that new topic
-    // this new button will function the same as the others
 
 
 });
