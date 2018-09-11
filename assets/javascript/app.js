@@ -58,9 +58,19 @@ $(document).ready(function() {
                 var animatedURL = specificGif.images.fixed_height.url;
                 //var $animatedGif = $(this).removeAttr("src");
                 $(this).attr("src", animatedURL);
-                console.log(gifArray);
+                $(this).removeClass("staticImg");
+                $(this).addClass("animatedImg");
             });
             // when moving gif is clicked, it stops moving
+            $(document).on("click", ".animatedImg", function() {
+                var gifArray2 = response.data;
+                var count2 = $(this).attr("gif-count");
+                var specificGif2 = gifArray2[count2];
+                var staticURL2 = specificGif2.images.fixed_height_still.url;
+                $(this).attr("src", staticURL2);
+                $(this).removeClass("animatedImg");
+                $(this).addClass("staticImg");
+            })
 
         });
     });
