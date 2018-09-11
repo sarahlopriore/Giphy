@@ -16,6 +16,7 @@ $(document).ready(function() {
     // for each button click, run an ajax request to the giphy api to get 10 search results for that topic
     // results are displayed as static gifs
     $(document).on("click", ".topics-btn", function() {
+        //var buttonId = $(this).attr("id");
         var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + $(this).attr("id") + "&api_key=mMR97LCZTFVnxouA2wyRM7RKUTWNdMv7&limit=10&rating=pg-13";
         
         $.ajax({
@@ -24,7 +25,7 @@ $(document).ready(function() {
         }).then(function(response) {
             var $display = $("#gifDisplay");
             var dataArray = response.data;
-            var gifCounter = 0;
+            var gifCounter = -1;
             // have the gif results overwrite the previous results
             $display.empty();
             for (j = 0; j < dataArray.length; j++) {
@@ -34,27 +35,35 @@ $(document).ready(function() {
                 var $newGifDiv = $("<div class='col-md-3'></div>");
                 var staticURL = dataNum.images.fixed_height_still.url;
                 var $staticGif = $("<img />").attr("src", staticURL);
-                $staticGif.addClass("spacing");
+                $staticGif.addClass("spacing staticImg");
+                $staticGif.attr("gif-count", gifCounter);
+                // add the button's text as a variable to be used later
+                //var staticId = $(this).attr("id");
                 $newGifDiv.append($staticGif);
                 // each gif should also display the rating underneath
                 var gifRating = dataNum.rating;
                 var $ratingDisplay = $("<p></p>").append("Rating: " + gifRating);
                 $newGifDiv.append($ratingDisplay); 
                 console.log(gifCounter);
+                console.log(dataNum.images);
+                console.log(dataNum.images.fixed_height.url);
                 $display.append($newGifDiv); 
-                // create a new row for every 3 gifs
-                //if (gifCounter ) {
-                    //var $newRow = $("<div class='row'></div>")
-                    //$newRow.append($newGifDiv)
-                    //$("#gifSection").append($newRow);
-                //}
-            }
-        })
-    })
+            };
 
+            // when a static gif is clicked, it moves
+            $(document).on("click", ".staticImg", function() {
+                var gifArray = response.data;
+                var count = $(this).attr("gif-count");
+                var specificGif = gifArray[count];
+                var animatedURL = specificGif.images.fixed_height.url;
+                //var $animatedGif = $(this).removeAttr("src");
+                $(this).attr("src", animatedURL);
+                console.log(gifArray);
+            });
+            // when moving gif is clicked, it stops moving
 
-    // when a static gif is clicked, it moves
-    // when moving gif is clicked, it stops moving
+        });
+    });
 
 
 
@@ -63,4 +72,4 @@ $(document).ready(function() {
     // this new button will function the same as the others
 
 
-})
+});
