@@ -24,22 +24,30 @@ $(document).ready(function() {
         }).then(function(response) {
             var $display = $("#gifDisplay");
             var dataArray = response.data;
+            var gifCounter = 0;
             // have the gif results overwrite the previous results
             $display.empty();
             for (j = 0; j < dataArray.length; j++) {
-                // dataNum is technically also counting number of gifs being created, so also using as gif counter
+                // increase gifCounter by 1 
+                gifCounter++;
                 var dataNum = dataArray[j];
-                var $newGifDiv = $("<div class='col-md-4'></div>");
+                var $newGifDiv = $("<div class='col-md-3'></div>");
                 var staticURL = dataNum.images.fixed_height_still.url;
                 var $staticGif = $("<img />").attr("src", staticURL);
                 $staticGif.addClass("spacing");
                 $newGifDiv.append($staticGif);
                 // each gif should also display the rating underneath
                 var gifRating = dataNum.rating;
-                var $ratingDisplay = $("<p></p>").append(gifRating);
-                console.log($ratingDisplay);
+                var $ratingDisplay = $("<p></p>").append("Rating: " + gifRating);
                 $newGifDiv.append($ratingDisplay); 
-                $display.append($newGifDiv);
+                console.log(gifCounter);
+                $display.append($newGifDiv); 
+                // create a new row for every 3 gifs
+                //if (gifCounter ) {
+                    //var $newRow = $("<div class='row'></div>")
+                    //$newRow.append($newGifDiv)
+                    //$("#gifSection").append($newRow);
+                //}
             }
         })
     })
