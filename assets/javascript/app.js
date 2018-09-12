@@ -49,7 +49,7 @@ $(document).ready(function() {
                 // increase gifCounter by 1 
                 gifCounter++;
                 var dataNum = dataArray[j];
-                var $newGifDiv = $("<div class='col-md-3'></div>");
+                var $newGifDiv = $("<div class='col'></div>");
                 var staticURL = dataNum.images.fixed_height_still.url;
                 var $staticGif = $("<img />").attr("src", staticURL);
                 $staticGif.addClass("spacing staticImg");
