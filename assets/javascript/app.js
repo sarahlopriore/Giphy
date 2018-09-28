@@ -63,6 +63,7 @@ $(document).ready(function() {
                 $newGifDiv.append($ratingDisplay); 
                 console.log(gifCounter);
                 console.log(dataNum.images);
+                console.log(dataNum);
                 //console.log(dataNum.images.fixed_height.url);
                 $display.append($newGifDiv); 
             };
